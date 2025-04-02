@@ -26,3 +26,18 @@ struct IssuedBook
 	int issueDate;
 	int returnDate;
 };
+
+struct Book library[MAX_BOOKS];
+struct IssuedBook issuedBooks[MAX_ISSUED];
+int bookCount = 0;
+int issuedCount = 0;
+
+void toUpperCase(char *str);
+void addBook();			   
+void issueBook();		   
+void returnBook();		   
+void displayAllBooks();	   
+void displayIssuedBooks(); 
+void saveData();		   
+void loadData();		   
+void deleteBook();		   
