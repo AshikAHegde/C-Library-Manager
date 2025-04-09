@@ -51,3 +51,39 @@ void toUpperCase(char *str)
 		str[i] = toupper(str[i]);
 	}
 }
+
+
+void addBook()
+{
+	if (bookCount >= MAX_BOOKS)
+	{
+		printf("Library is full!\n");
+		return;
+	}
+
+	struct Book newBook;
+	newBook.sr_no1 = bookCount + 1; // serial no.
+
+	printf("Enter book ID: ");
+	scanf("%d", &newBook.id);
+	fflush(stdin);
+
+	printf("Enter book title: ");
+	fgets(newBook.title, MAX_TITLE_LEN, stdin);
+	newBook.title[strcspn(newBook.title, "\n")] = '\0'; // Remove newline
+	toUpperCase(newBook.title);							// Convert to uppercase
+
+	printf("Enter author name: ");
+	fgets(newBook.author, MAX_AUTHOR_LEN, stdin);
+	newBook.author[strcspn(newBook.author, "\n")] = 0; // Remove newline
+	toUpperCase(newBook.author);					   // Convert to uppercase
+
+	printf("Enter quantity: ");
+	scanf("%d", &newBook.quantity);
+	fflush(stdin);
+	newBook.allocatedCount = 0;
+	fflush(stdin);
+
+	library[bookCount++] = newBook;
+	printf("Book added successfully!\n");
+}
