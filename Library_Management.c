@@ -107,3 +107,87 @@ int daysInMonth(int month, int year)
 		return 31;
 	}
 }
+
+void issueBook()
+{
+	if (issuedCount >= MAX_ISSUED)
+	{
+		printf("All books are currently issued!\n");
+		return;
+	}
+
+	int id, issueDate, returnDate;
+	char userName[MAX_NAME_LEN];
+
+	printf("Enter book ID: ");
+	scanf("%d", &id);
+	fflush(stdin);
+
+	int bookIndex = -1;
+	for (int i = 0; i < bookCount; i++)
+	{
+		if (library[i].id == id)
+		{
+			bookIndex = i;
+			break;
+		}
+	}
+
+	if (bookIndex == -1 || library[bookIndex].quantity <= 0)
+	{
+		printf("Book not available!\n");
+		return;
+	}
+
+	printf("Enter your name: ");
+	fgets(userName, MAX_NAME_LEN, stdin);
+	userName[strcspn(userName, "\n")] = 0; // Remove newline
+	toUpperCase(userName);				   // Convert to uppercase
+
+	printf("Enter issue valid date (yyyymmdd): ");
+	scanf("%d", &issueDate);
+	fflush(stdin);
+
+	// Automatically set return date to 10 days after issue date
+	int issueYear = issueDate / 10000;
+	int issueMonth = (issueDate / 100) % 100;
+	if (issueMonth > 12 || issueMonth < 1)
+	{
+		printf("Invalid Month Entered.");
+		return;
+	}
+	int issueDay = issueDate % 100;
+	int maxday = daysInMonth(issueMonth, issueYear);
+	if (issueDay > maxday || issueDay < 1)
+	{
+		printf("Invalid Day Entered.");
+		return;
+	}
+
+	int returnYear = issueYear;
+	int returnMonth = issueMonth;
+	int returnDay = issueDay + 10;
+
+	int maxd = daysInMonth(returnMonth, returnYear);
+	while (returnDay > maxd)
+	{
+		returnDay -= maxd;
+		returnMonth++;
+		if (returnMonth > 12)
+		{
+			returnMonth = 1;
+			returnYear++;
+		}
+	}
+	returnDate = returnYear * 10000 + returnMonth * 100 + returnDay;
+
+	issuedBooks[issuedCount].sr_no2 = issuedCount + 1;
+	issuedBooks[issuedCount].id = id;
+	strcpy(issuedBooks[issuedCount].userName, userName);
+	issuedBooks[issuedCount].issueDate = issueDate;
+	issuedBooks[issuedCount].returnDate = returnDate;
+	issuedCount++;
+	library[bookIndex].allocatedCount++;
+	library[bookIndex].quantity--;
+	printf("Book issued successfully!\n");
+}
