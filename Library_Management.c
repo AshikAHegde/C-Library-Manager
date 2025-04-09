@@ -92,3 +92,18 @@ int isLeapYear(int year)
 {
 	return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
+int daysInMonth(int month, int year)
+{
+	switch (month)
+	{
+	case 4:
+	case 6:
+	case 9:
+	case 11:
+		return 30;
+	case 2:
+		return isLeapYear(year) ? 29 : 28;
+	default:
+		return 31;
+	}
+}
