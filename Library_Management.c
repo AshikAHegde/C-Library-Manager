@@ -191,3 +191,63 @@ void issueBook()
 	library[bookIndex].quantity--;
 	printf("Book issued successfully!\n");
 }
+
+void returnBook()
+{
+	int id, today;
+	char userName[MAX_NAME_LEN];
+
+	printf("Enter book ID: ");
+	scanf("%d", &id);
+	fflush(stdin);
+
+	printf("Enter your name same as the name while given at issuing the book: ");
+	fgets(userName, MAX_NAME_LEN, stdin);
+	userName[strcspn(userName, "\n")] = 0; // Remove newline
+	toUpperCase(userName);				   // Convert to uppercase
+
+	printf("Enter today's date (yyyymmdd): ");
+	scanf("%d", &today);
+	fflush(stdin);
+	int bookIndex = -1;
+	for (int j = 0; j < bookCount; j++)
+	{
+		if (library[j].id == id)
+		{
+			bookIndex = j;
+			break;
+		}
+	}
+
+	for (int i = 0; i < issuedCount; i++)
+	{
+		if (issuedBooks[i].id==id && strcmp(issuedBooks[i].userName, userName) == 0)
+		{
+			if (issuedBooks[i].issueDate > today)
+			{
+				printf("Invalid date\n");
+				return;
+			}
+			else if (issuedBooks[i].returnDate >= today)
+			{
+				library[bookIndex].allocatedCount--;
+				library[bookIndex].quantity++;
+				printf("Book returned successfully!\n");
+				// Remove the issued book record
+				for (int j = i; j < issuedCount - 1; j++)
+				{
+					issuedBooks[j] = issuedBooks[j + 1];
+					issuedBooks[j].sr_no2--; // Update serial number
+				}
+				issuedCount--;
+				return;
+			}
+			else
+			{
+				printf("You are late in returning the book!\n");
+				return;
+			}
+		}
+	}
+	printf("Book not found in issued records or user mismatch!\n");
+}
