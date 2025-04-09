@@ -251,3 +251,11 @@ void returnBook()
 	}
 	printf("Book not found in issued records or user mismatch!\n");
 }
+void displayAllBooks()
+{
+	printf("All Books in Library:\n");
+	for (int i = 0; i < bookCount; i++)
+	{
+		printf("%d. ID: %d, Title: %s, Author: %s, Quantity: %d, Allocated: %d\n", library[i].sr_no1, library[i].id, library[i].title, library[i].author, library[i].quantity, library[i].allocatedCount);
+	}
+}
