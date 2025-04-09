@@ -320,3 +320,45 @@ void loadData()
 		fclose(allocFile);
 	}
 }
+
+void deleteBook()
+{
+	int id;
+	printf("Enter book ID to delete: ");
+	scanf("%d", &id);
+	fflush(stdin);
+	for (int i = 0; i < issuedCount; i++)
+	{
+		if (issuedBooks[i].id == id)
+		{
+			printf("Book is currently issued! Cannot delete.\n");
+			return;
+		}
+	}
+	int bookIndex = -1;
+	for (int i = 0; i < bookCount; i++)
+	{
+		if (library[i].id == id)
+		{
+			bookIndex = i;
+			break;
+		}
+	}
+
+	if (bookIndex == -1)
+	{
+		printf("Invalid book ID!\n");
+		return;
+	}
+
+	// Shift books to fill the gap
+	for (int i = bookIndex; i < bookCount - 1; i++)
+	{
+		library[i] = library[i + 1];
+		library[i].sr_no1--; // Update serial number
+	}
+	bookCount--;
+
+	printf("Book deleted and serial numbers reassigned successfully!\n");
+	saveData(); // Save changes to library.txt
+}
