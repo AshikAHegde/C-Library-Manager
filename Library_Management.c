@@ -268,3 +268,31 @@ void displayIssuedBooks()
 		printf("%d. Book ID: %d, User: %s, Issue Date: %d, Return Date: %d\n", issuedBooks[i].sr_no2, issuedBooks[i].id, issuedBooks[i].userName, issuedBooks[i].issueDate, issuedBooks[i].returnDate);
 	}
 }
+
+void saveData()
+{
+	FILE *libFile = fopen("library.txt", "w");
+	FILE *allocFile = fopen("books_allocation_info.txt", "w");
+
+	if (libFile == NULL || allocFile == NULL)
+	{
+		printf("Error opening files for saving!\n");
+		return;
+	}
+
+	// Saving library book information
+	for (int i = 0; i < bookCount; i++)
+	{
+		fprintf(libFile, "%d. ID: %d, Title: %s, Author: %s, Quantity: %d,Allocated: %d\n", library[i].sr_no1, library[i].id, library[i].title, library[i].author, library[i].quantity, library[i].allocatedCount);
+	}
+
+	// Saving issued book information
+	for (int i = 0; i < issuedCount; i++)
+	{
+		fprintf(allocFile, "%d. Book ID: %d, User: %s, Issue Date: %d, Return Date: %d\n", issuedBooks[i].sr_no2, issuedBooks[i].id, issuedBooks[i].userName, issuedBooks[i].issueDate, issuedBooks[i].returnDate);
+	}
+
+	fclose(libFile);
+	fclose(allocFile);
+	printf("Data saved successfully!\n");
+}
