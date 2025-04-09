@@ -362,3 +362,53 @@ void deleteBook()
 	printf("Book deleted and serial numbers reassigned successfully!\n");
 	saveData(); // Save changes to library.txt
 }
+
+int main()
+{
+	loadData();
+	int choice;
+
+	do
+	{
+		printf("\nLibrary Management System\n");
+		printf("1. Add Book\n");
+		printf("2. Issue Book\n");
+		printf("3. Return Book\n");
+		printf("4. Display All Books\n");
+		printf("5. Display Issued Books\n");
+		printf("6. Delete Book\n");
+		printf("7. Save and Exit\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		fflush(stdin);
+
+		switch (choice)
+		{
+		case 1:
+			addBook();
+			break;
+		case 2:
+			issueBook();
+			break;
+		case 3:
+			returnBook();
+			break;
+		case 4:
+			displayAllBooks();
+			break;
+		case 5:
+			displayIssuedBooks();
+			break;
+		case 6:
+			deleteBook();
+			break;
+		case 7:
+			saveData();
+			break;
+		default:
+			printf("Invalid choice! Please try again.\n");
+		}
+	} while (choice != 7);
+
+	return 0;
+}
