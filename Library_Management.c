@@ -296,3 +296,27 @@ void saveData()
 	fclose(allocFile);
 	printf("Data saved successfully!\n");
 }
+
+void loadData()
+{
+	FILE *libFile = fopen("library.txt", "r");
+	FILE *allocFile = fopen("books_allocation_info.txt", "r");
+
+	if (libFile != NULL)
+	{
+		while (fscanf(libFile, "%d. ID: %d, Title: %99[^,], Author: %99[^,], Quantity: %d, Allocated: %d\n", &library[bookCount].sr_no1, &library[bookCount].id, &library[bookCount].title, library[bookCount].author, &library[bookCount].quantity, &library[bookCount].allocatedCount) != EOF)
+		{
+			bookCount++;
+		}
+		fclose(libFile);
+	}
+
+	if (allocFile != NULL)
+	{
+		while (fscanf(allocFile, "%d. Book ID: %d, User: %49[^,], Issue Date: %d, Return Date: %d\n", &issuedBooks[issuedCount].sr_no2, &issuedBooks[issuedCount].id, &issuedBooks[issuedCount].userName, &issuedBooks[issuedCount].issueDate, &issuedBooks[issuedCount].returnDate) != EOF)
+		{
+			issuedCount++;
+		}
+		fclose(allocFile);
+	}
+}
