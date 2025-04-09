@@ -259,3 +259,12 @@ void displayAllBooks()
 		printf("%d. ID: %d, Title: %s, Author: %s, Quantity: %d, Allocated: %d\n", library[i].sr_no1, library[i].id, library[i].title, library[i].author, library[i].quantity, library[i].allocatedCount);
 	}
 }
+
+void displayIssuedBooks()
+{
+	printf("Issued Books:\n");
+	for (int i = 0; i < issuedCount; i++)
+	{
+		printf("%d. Book ID: %d, User: %s, Issue Date: %d, Return Date: %d\n", issuedBooks[i].sr_no2, issuedBooks[i].id, issuedBooks[i].userName, issuedBooks[i].issueDate, issuedBooks[i].returnDate);
+	}
+}
